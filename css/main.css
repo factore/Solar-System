@@ -33,6 +33,7 @@ h4 {margin: 0px;}
 
 #menu ul {     
 	list-style: inside;
+	line-height: 20px;
 	margin: 0px;
 	padding: 0px;
 }
