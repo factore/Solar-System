@@ -35,7 +35,7 @@ $().ready(function() {
 		$("#solar_system").html("");
 		$('#show_orbits').attr('checked', "");
 		createSS();
-	});                           
+	});
 	                                                                                               
 	$("#menu li").hover(function(){
 		var planet = $(this).attr("id");
@@ -75,6 +75,10 @@ $().ready(function() {
 			neptune.show_orbit(false);
 		}
   });
+
+	$("#presets input").click( function() {
+		preset($(this).val());
+	});
 	
 });
 
@@ -155,4 +159,17 @@ function Planet(solar_system, radius, distance_from_sun, year_in_days, colour) {
 function animatePlanet(planet) {
 	eval(planet + ".go();");
 	setTimeout("animatePlanet(\"" + planet + "\");", eval(planet + ".year_in_days"));
+}
+
+function preset(name) {
+	sets = {
+		first: [1000, 5, 1, 1, 2440],
+		second: [1000, 5, 15, 1, 36000]
+	}
+	selected = sets[name];
+	$("#time_scale").val(selected[0]);
+	$("#distance_pixels").val(selected[1]);
+	$("#distance_mkm").val(selected[2]);
+	$("#radius_pixels").val(selected[3]);
+	$("#radius_km").val(selected[4]);
 }
