@@ -27,7 +27,7 @@ $().ready(function() {
 			alert("Scaling numbers must be numerical.  I mean, come on.");
 			ok = false;
 		}            
-		if ($("#distance_mkm").val() == 0 || $("#radius_km").val()) {
+		if ($("#distance_mkm").val() == 0 || $("#radius_km").val() == 0) {
 			alert("No dividing by zero!  Are you trying to cause a black hole and kill us all?!?");
 			ok = false;
 		} 
