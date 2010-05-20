@@ -13,9 +13,9 @@ body {
 	background: black;
 	line-height: 28px;
 	width: 100%;
-	border-bottom: 10px solid gray;
+	border-bottom: 6px solid gray;
 	padding: 20px;
-	height: 140px;
+	height: 110px;
 }
 
 #menu div {
