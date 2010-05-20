@@ -12,9 +12,9 @@
   <div id="menu">
     <div>
       <form id="settings">
-        <label>Time Scale (ms/day)</label><input id="time_scale" type="text" value="1000" /> ms/day<br/>
-        <label>Distance Scale (px/Mkm)</label><input id="distance_pixels" type="text" value="5" /> px / <input id="distance_mkm" type="text" value="1" /> million km<br/>
-        <label>Radius Scale (px/km)</label><input id="radius_pixels" type="text" value="1" /> px / <input id="radius_km" type="text" value="2440" /> km<br/>
+        <label>Time Scale (ms/day)</label><input id="time_scale" type="text" value="1000" size="10" /> ms/day<br/>
+        <label>Distance Scale (px/Mkm)</label><input id="distance_pixels" type="text" value="5" size="10" /> px / <input id="distance_mkm" type="text" value="1" size="10" /> million km<br/>
+        <label>Radius Scale (px/km)</label><input id="radius_pixels" type="text" value="1" size="10" /> px / <input id="radius_km" type="text" value="2440" size="10" /> km<br/>
         <label>&nbsp;</label><input type="submit" value="Update">
       </form>
       <form>
@@ -22,7 +22,7 @@
       </form>
     </div>
     <div>
-      <ul>
+      <ul class="highlight">
         <li id="mercury">Mercury</li>
         <li id="venus">Venus</li>
         <li id="earth">Earth</li>
@@ -30,7 +30,7 @@
       </ul>
     </div>
     <div>
-      <ul>
+      <ul class="highlight">
         <li id="jupiter">Jupiter</li>
         <li id="saturn">Saturn</li>
         <li id="uranus">Uranus</li>

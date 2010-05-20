@@ -43,3 +43,5 @@ div.clear {
 	float: none !important;
 	clear: both;
 }
+
+ul.highlight li { cursor: help; }
