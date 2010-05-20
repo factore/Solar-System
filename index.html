@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Marc's Solar System Page</title>
+	<script src="javascript/jquery-1.4.2.min.js"></script>
+	<script src="javascript/raphael-min.js"></script>
+	<script src="javascript/index.js"></script>
+	<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <div id="menu">
+    <div>
+      <form id="settings">
+        <label>Time Scale (ms/day)</label><input id="time_scale" type="text" value="1000" /> ms/day<br/>
+        <label>Distance Scale (px/Mkm)</label><input id="distance_pixels" type="text" value="5" /> px / <input id="distance_mkm" type="text" value="1" /> million km<br/>
+        <label>Radius Scale (px/km)</label><input id="radius_pixels" type="text" value="1" /> px / <input id="radius_km" type="text" value="2440" /> km<br/>
+        <label>&nbsp;</label><input type="submit" value="Update">
+      </form>
+      <form>
+        Show Orbits? <input id="show_orbits" type="checkbox" />
+      </form>
+    </div>
+    <div>
+      <ul>
+        <li id="mercury">Mercury</li>
+        <li id="venus">Venus</li>
+        <li id="earth">Earth</li>
+        <li id="mars">Mars</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li id="jupiter">Jupiter</li>
+        <li id="saturn">Saturn</li>
+        <li id="uranus">Uranus</li>
+        <li id="neptune">Neptune</li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div id="solar_system"></div>
+</body>
+</html>

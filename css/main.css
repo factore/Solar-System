@@ -1,0 +1,45 @@
+/* ------------- Soloar System ---------------- */
+body {       
+	font-family: Helvetica,"Helvetica Neue",Arial,sans-serif;
+	font-size: 12px;
+	background: black;
+	color: gray;
+	margin: 0px;
+	padding: 0px;
+}
+                                
+#menu {
+	position: fixed;       
+	background: black;
+	line-height: 28px;
+	width: 100%;
+	border-bottom: 10px solid gray;
+	padding: 20px;
+	height: 140px;
+}
+
+#menu div {
+	float: left;
+	padding-right: 20px;
+}            
+ 
+#menu label {
+	float: left;
+	clear: both;
+	width: 200px;
+}                
+
+#menu ul {
+	margin: 0px;
+}
+             
+#solar_system {
+	position: relative;
+	top: 190px;
+	z-index: -1;
+}
+
+div.clear {
+	float: none !important;
+	clear: both;
+}
