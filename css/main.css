@@ -7,6 +7,8 @@ body {
 	margin: 0px;
 	padding: 0px;
 }
+
+h4 {margin: 0px;}
                                 
 #menu {
 	position: fixed;       
@@ -29,13 +31,16 @@ body {
 	width: 160px;
 }                
 
-#menu ul {
+#menu ul {     
+	list-style: inside;
+	line-height: 20px;
 	margin: 0px;
+	padding: 0px;
 }
              
 #solar_system {
 	position: relative;
-	top: 190px;
+	top: 156px;
 	z-index: -1;
 }
 
