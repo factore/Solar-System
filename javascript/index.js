@@ -176,4 +176,5 @@ function preset(name) {
 	$("#distance_mkm").val(selected[2]);
 	$("#radius_pixels").val(selected[3]);
 	$("#radius_km").val(selected[4]);
+	$("#settings").submit();
 }
