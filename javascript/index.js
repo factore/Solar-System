@@ -2,8 +2,12 @@
 // radius_scale = 1/2440 (radius of mercury, smallest planet in solar system
 // radius_scale = 1 / 5000000, distance_scale = 1/5 (this sets them the same scale, but planets are still too big on screen)
 var time_scale = 1000; // microseconds / day
-var radius_scale = 1 / 2440; // pixels / km (radius of mercury, smallest planet in solar system)
-var distance_scale = 5 / 1 // pixels / million km
+var distance_pixels = 5;
+var distance_mkm = 1;
+var distance_scale = distance_pixels / distance_mkm; // pixels / million km
+var radius_pixels = 1;                              
+var radius_km = 2440;
+var radius_scale = radius_pixels / radius_km; // pixels / km (radius of mercury, smallest planet in solar system)
 var show_orbits = false;
 
 $().ready(function() {
@@ -11,13 +15,15 @@ $().ready(function() {
 	/* 
 	To Do:
 	* elliptical orbits
-	* rings around saturn 
-	* colours of jupiter and saturn
-	* have the above settings controlled by ui    
 	* drop in some info about the planets, controlled by a rollover
-	* check the input types, to make sure they are numbers
-	
 	*/
+
+	$("#time_scale").val(time_scale);
+	$("#distance_pixels").val(distance_pixels);
+	$("#distance_mkm").val(distance_mkm);
+	$("#radius_pixels").val(radius_pixels);
+	$("#radius_km").val(radius_km);
+	$('#show_orbits').attr('checked', "");
 	
 	createSS();
 	$("#settings").submit( function(event) {
@@ -32,9 +38,9 @@ $().ready(function() {
 			ok = false;
 		} 
 		if (ok) {
-			time_scale = $("#time_scale").val();
-			distance_scale = $("#distance_pixels").val() / $("#distance_mkm").val();
-			radius_scale = $("#radius_pixels").val() / $("#radius_km").val();
+			time_scale = Math.abs($("#time_scale").val());
+			distance_scale = Math.abs($("#distance_pixels").val() / $("#distance_mkm").val());
+			radius_scale = Math.abs($("#radius_pixels").val() / $("#radius_km").val());
 		}
 		$("#solar_system").html("");
 		$('#show_orbits').attr('checked', "");
@@ -89,18 +95,18 @@ $().ready(function() {
 function createSS() {
 	ss = new SolarSystem("solar_system",23000,1000, 695500);
 	
-	mercury = new Planet(ss, 2440, 58, 88, "#666666");
+	mercury = new Planet(ss, 2440, 58, 88, "#999999", false);
 	animatePlanet("mercury");
 	
-	venus = new Planet(ss, 6052, 108, 225, "#eeeeee");
+	venus = new Planet(ss, 6052, 108, 225, "#dddddd", false);
 	venus.go();
 	animatePlanet("venus");
 
-	earth = new Planet(ss, 6371, 150, 365, "#0000ff");
+	earth = new Planet(ss, 6371, 150, 365, "#3c4355", false);
 	earth.go();
 	animatePlanet("earth");
 
-	mars = new Planet(ss, 3396, 228, 687, "#ff0000");
+	mars = new Planet(ss, 3396, 228, 687, "#fdaf5c", false);
 	mars.go();
 	animatePlanet("mars");
 	
@@ -111,19 +117,19 @@ function createSS() {
 	});
 	asteroids.attr();
 	
-	jupiter = new Planet(ss, 71492, 779, 4332, "#eeeeee");
+	jupiter = new Planet(ss, 71492, 779, 4332, "120-#a68a75-#fee-#e9a274:50-#fee-#a68a75", false);
 	jupiter.go();
 	animatePlanet("jupiter");
 	
-	saturn = new Planet(ss, 60268, 1433, 10759, "#eeeeee");
+	saturn = new Planet(ss, 60268, 1433, 10759, "90-#8e8c73-#dcbb78-#8e8c73", true);
 	saturn.go();
 	animatePlanet("saturn");
 	
-	uranus = new Planet(ss, 25559, 2877, 30799, "#ccf2f3");
+	uranus = new Planet(ss, 25559, 2877, 30799, "#ccf2f3", false);
 	uranus.go();
 	animatePlanet("uranus");
 	
-	neptune = new Planet(ss, 24764, 4503,  60190, "#6197f9");
+	neptune = new Planet(ss, 24764, 4503,  60190, "#6197f9", false);
 	neptune.go();
 	animatePlanet("neptune");
 }
@@ -137,13 +143,17 @@ function SolarSystem(div, width, height, sun_radius) {
 }
 
 // radius in km, distance_from_sun in millions of km, years in earth days
-function Planet(solar_system, radius, distance_from_sun, year_in_days, colour) {
+function Planet(solar_system, radius, distance_from_sun, year_in_days, colour, has_rings) {
 	this.radius = radius * radius_scale >= 1 ? radius * radius_scale : 1;
 	this.distance_from_sun = distance_from_sun * distance_scale;
 	this.year_in_days = year_in_days * time_scale;
 	this.colour = colour;
+	this.has_rings = has_rings;
 	this.orbit = solar_system.canvas.path("M" + (solar_system.sun_x + this.distance_from_sun) + "," + solar_system.sun_y + "a" + this.distance_from_sun + "," + this.distance_from_sun + " 0 1,1 0,-1 z");
-	this.body = solar_system.canvas.circle(solar_system.sun_x + this.distance_from_sun, solar_system.sun_y, this.radius).attr({fill: colour});
+	this.body = solar_system.canvas.circle(solar_system.sun_x + this.distance_from_sun, solar_system.sun_y, this.radius).attr({fill: colour, stroke: "transparent"});
+	if (this.has_rings) {
+		this.rings = solar_system.canvas.ellipse(solar_system.sun_x + this.distance_from_sun, solar_system.sun_y, this.radius * 2, this.radius * .5 ).attr({fill: colour}).toBack();
+	}
 	this.show_orbit = function (show_orbit) {
 		if (show_orbit) {
 			this.orbit.attr("stroke", "white");
@@ -153,9 +163,15 @@ function Planet(solar_system, radius, distance_from_sun, year_in_days, colour) {
 	}
 	this.scale = function(scale) {
 		this.body.scale(scale);
+		if (this.has_rings) {
+			this.rings.scale(scale);
+		}
 	}
 	this.go = function() {
 		this.body.animateAlong(this.orbit, this.year_in_days);
+		if (this.has_rings) {
+			this.rings.animateAlong(this.orbit, this.year_in_days);
+		}
 		//setTimeout(this.go(), year_in_days * 1000);
 	}
 }
@@ -168,7 +184,8 @@ function animatePlanet(planet) {
 function preset(name) {
 	sets = {
 		first: [1000, 5, 1, 1, 2440],
-		second: [1000, 5, 15, 1, 36000]
+		second: [1000, 1, 3, 1, 36000],
+		third: [1000, 1, 5, 1, 5000000]
 	}
 	selected = sets[name];
 	$("#time_scale").val(selected[0]);
